@@ -8,15 +8,22 @@
     
     <!-- bean -> object creation (IOC container) -->
     
-    <bean name="tataBean" class="com.sprk.cars.Tata"></bean>
-    <bean name="kiaBean" class="com.sprk.cars.Kia"></bean>
-    <bean name="bmwBean" class="com.sprk.cars.BMW"></bean>
+    <bean name="tataBean" class="com.sprk.cars.Tata" lazy-init="true"></bean>
+    <bean name="kiaBean" class="com.sprk.cars.Kia" lazy-init="true"></bean>
+    <bean name="bmwBean" class="com.sprk.cars.BMW" lazy-init="true"></bean>
     
+    	<!-- Dependency Injection
+    	Constructor Injection -->
+    <!-- Showroom Bean (Need Car Object) 
+    <bean name="showRoomBean" class="com.sprk.showroom.CarShowroom">
+    	<constructor-arg name="iCar" ref="tataBean"></constructor-arg>
+    </bean> -->
+    
+    	<!-- Dependency Injection -->
+    	<!-- Setter Injection -->
     <!-- Showroom Bean (Need Car Object) -->
     <bean name="showRoomBean" class="com.sprk.showroom.CarShowroom">
-    	<!-- Dependency Injection -->
-    	<!-- Constructor Injection -->
-    	<constructor-arg name="iCar" ref="tataBean"></constructor-arg>
+    	<property name="iCar" ref="bmwBean"></property>
     </bean>
 
 	
