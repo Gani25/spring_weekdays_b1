@@ -1,7 +1,6 @@
 package com.sprk.api_demo.demo_controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +18,12 @@ public class FirstController {
         return "Hello from SPRK Tech";
     }
 
-    @RequestMapping("/add")
+//    @RequestMapping(value = "/add", method = RequestMethod.POST)
+//    public int doAddition(){
+//        return 10+20;
+//    }
+
+    @PostMapping("/add")
     public int doAddition(){
         return 10+20;
     }
@@ -29,7 +33,8 @@ public class FirstController {
         return Arrays.asList("Banana","Apple","Mango","Grapes");
     }
 
-    @RequestMapping("/student")
+//    @RequestMapping(value = "/student", method = RequestMethod.GET )
+    @GetMapping("/student")
     public Map<String,Object> getStudentInfo(){
 
         Map<String,Object> student = new HashMap<>();
@@ -50,4 +55,6 @@ public class FirstController {
 
         return student;
     }
+
+
 }
