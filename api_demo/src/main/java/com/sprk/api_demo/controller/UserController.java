@@ -1,9 +1,9 @@
 package com.sprk.api_demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.sprk.api_demo.model.UserInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -17,5 +17,13 @@ public class UserController {
         message.append("Gender: " + gender + "\n");
         message.append("Age: " + age + "\n");
         return message;
+    }
+
+    @GetMapping("/save-user/v2")
+    public String saveUserNew(@RequestBody UserInfo userInfo) {
+
+        System.out.println(userInfo);
+
+        return String.format("User saved Successfully, User Info Object: %s", userInfo.toString());
     }
 }
