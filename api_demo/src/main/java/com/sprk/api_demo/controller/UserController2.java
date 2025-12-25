@@ -44,9 +44,12 @@ public class UserController2 {
 
         if (!Pattern.matches("\\d+", indexStr.replace("-",""))) {
 
+
 //            return new ResponseEntity<>("Index should be number only",HttpStatus.BAD_REQUEST);
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Index should be number only");
+            throw new RuntimeException("Index should be number only");
+
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Index should be number only");
 
         }
 
@@ -54,10 +57,13 @@ public class UserController2 {
 
         int index = Integer.parseInt(indexStr);
         if (index < 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Index cannot be negative");
+            throw new RuntimeException("Index cannot be negative");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Index cannot be negative");
         }
         if (index >= users.size()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Index cannot be greater than the number of users");
+
+            throw new RuntimeException("Index cannot be greater than the number of users");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Index cannot be greater than the number of users");
         }
 
 //        return ResponseEntity.status(HttpStatus.OK).body(users.get(index));
