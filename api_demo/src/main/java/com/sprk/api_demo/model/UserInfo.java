@@ -7,6 +7,18 @@ public class UserInfo {
     private String gender;
     private int age;
 
+
+    public UserInfo() {
+    }
+
+    public UserInfo(String firstName, String lastName, String gender, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+
+    }
+
     public int getAge() {
         return age;
     }
