@@ -45,4 +45,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return false;
     }
+
+    @Override
+    public EmployeeInfo updateEmployee(int empId, EmployeeInfo employeeInfo) {
+        EmployeeInfo existingEmployee = employeeRepository.findById(empId).orElse(null);
+        if(existingEmployee != null) {
+            if(employeeInfo.getName() != null && !employeeInfo.getName().isBlank()){
+                existingEmployee.setName(employeeInfo.getName());
+            }
+            if(employeeInfo.getGender() != null && !employeeInfo.getGender().isBlank()){
+                existingEmployee.setGender(employeeInfo.getGender());
+            }
+            if (employeeInfo.getEmail() != null && !employeeInfo.getEmail().isBlank()){
+                existingEmployee.setEmail(employeeInfo.getEmail());
+            }
+
+            EmployeeInfo updatedEmployee = employeeRepository.save(existingEmployee);
+            return updatedEmployee;
+        }
+        return null;
+    }
 }

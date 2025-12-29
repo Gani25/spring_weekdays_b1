@@ -43,4 +43,10 @@ public class EmployeeController {
         }
         return String.format("Employee with id = %d could not found!!", empId);
     }
+
+    @PutMapping("/employees/{empId}")
+    public EmployeeInfo updateEmployee(@PathVariable int empId, @RequestBody EmployeeInfo employeeInfo) {
+
+        return employeeService.updateEmployee(empId, employeeInfo);
+    }
 }

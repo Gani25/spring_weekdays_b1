@@ -13,4 +13,6 @@ public interface EmployeeService {
     EmployeeInfo getEmployeeById(int empId);
 
     boolean deleteById(int empId);
+
+    EmployeeInfo updateEmployee(int empId, EmployeeInfo employeeInfo);
 }
