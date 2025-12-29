@@ -3,10 +3,9 @@ package com.sprk.employee_management.controller;
 import com.sprk.employee_management.entity.EmployeeInfo;
 import com.sprk.employee_management.service.EmployeeService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 // base mapping
@@ -21,5 +20,27 @@ public class EmployeeController {
 
         return employeeService.addEmployee(employeeInfo);
 
+    }
+
+    @GetMapping("/employees")
+    public List<EmployeeInfo> getAllEmployees() {
+
+        return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("/employees/{empId}")
+    public EmployeeInfo getEmployeeById(@PathVariable int empId) {
+
+        return employeeService.getEmployeeById(empId);
+    }
+
+    @DeleteMapping("/employees/{empId}")
+    public String deleteEmployeeById(@PathVariable int empId) {
+
+        boolean result = employeeService.deleteById(empId);
+        if (result) {
+            return String.format("Employee with id = %d deleted successfully", empId);
+        }
+        return String.format("Employee with id = %d could not found!!", empId);
     }
 }
