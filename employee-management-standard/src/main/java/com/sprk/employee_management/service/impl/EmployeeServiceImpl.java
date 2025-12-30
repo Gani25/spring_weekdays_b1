@@ -1,5 +1,6 @@
 package com.sprk.employee_management.service.impl;
 
+import com.sprk.employee_management.dto.EmployeeDto;
 import com.sprk.employee_management.entity.EmployeeInfo;
 import com.sprk.employee_management.repository.EmployeeRepository;
 import com.sprk.employee_management.service.EmployeeService;
@@ -15,14 +16,34 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public EmployeeInfo addEmployee(EmployeeInfo employeeInfo) {
+    public EmployeeDto addEmployee(EmployeeDto employeeDto) {
 
-        employeeInfo.setEmpId(0);
+        employeeDto.setEmpId(null);
+
+        // Conversion from DTO to Entity
+        EmployeeInfo employeeInfo = EmployeeInfo
+                .builder()
+                .empId(employeeDto.getEmpId())
+                .age(employeeDto.getAge())
+                .email(employeeDto.getEmail())
+                .firstName(employeeDto.getFirstName())
+                .lastName(employeeDto.getLastName())
+                .gender(employeeDto.getGender())
+                .department(employeeDto.getDepartment())
+                .phone(employeeDto.getPhone())
+                .salary(employeeDto.getSalary())
+                .build();
+
 
         EmployeeInfo savedEmployee = employeeRepository.save(employeeInfo);
-        return savedEmployee;
+
+        employeeDto.setEmpId(savedEmployee.getEmpId());
+
+        // COnversion from Entity To Dto
+        return employeeDto;
     }
 
+    /*
     @Override
     public List<EmployeeInfo> getAllEmployees() {
         List<EmployeeInfo> allEmployees = employeeRepository.findAll();
@@ -44,9 +65,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             return true;
         }
         return false;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public EmployeeInfo updateEmployee(int empId, EmployeeInfo employeeInfo) {
         EmployeeInfo existingEmployee = employeeRepository.findById(empId).orElse(null);
         if(existingEmployee != null) {
@@ -64,5 +85,5 @@ public class EmployeeServiceImpl implements EmployeeService {
             return updatedEmployee;
         }
         return null;
-    }
+    }*/
 }

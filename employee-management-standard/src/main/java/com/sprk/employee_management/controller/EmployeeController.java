@@ -1,7 +1,9 @@
 package com.sprk.employee_management.controller;
 
+import com.sprk.employee_management.dto.EmployeeDto;
 import com.sprk.employee_management.entity.EmployeeInfo;
 import com.sprk.employee_management.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +18,16 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/employees")
-    public EmployeeInfo saveEmployee(@RequestBody EmployeeInfo employeeInfo) {
+    public EmployeeDto saveEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
 
-        return employeeService.addEmployee(employeeInfo);
-
+        System.out.println(employeeDto);
+//        return employeeService.addEmployee(employeeDto);
+        return null;
     }
 
+    /*
     @GetMapping("/employees")
+
     public List<EmployeeInfo> getAllEmployees() {
 
         return employeeService.getAllEmployees();
@@ -44,9 +49,10 @@ public class EmployeeController {
         return String.format("Employee with id = %d could not found!!", empId);
     }
 
-    @PutMapping("/employees/{empId}")
-    public EmployeeInfo updateEmployee(@PathVariable int empId, @RequestBody EmployeeInfo employeeInfo) {
-
-        return employeeService.updateEmployee(empId, employeeInfo);
-    }
+//    @PutMapping("/employees/{empId}")
+//    public EmployeeInfo updateEmployee(@PathVariable int empId, @RequestBody EmployeeInfo employeeInfo) {
+//
+//        return employeeService.updateEmployee(empId, employeeInfo);
+//    }
+    */
 }
