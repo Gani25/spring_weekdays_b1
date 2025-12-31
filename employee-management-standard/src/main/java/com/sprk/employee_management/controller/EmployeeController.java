@@ -1,10 +1,15 @@
 package com.sprk.employee_management.controller;
 
+import com.sprk.employee_management.constant.EmployeeConstant;
 import com.sprk.employee_management.dto.EmployeeDto;
+import com.sprk.employee_management.dto.ResponseDto;
+import com.sprk.employee_management.dto.SuccessResponseDto;
 import com.sprk.employee_management.entity.EmployeeInfo;
 import com.sprk.employee_management.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +23,22 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/employees")
-    public EmployeeDto saveEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<ResponseDto<SuccessResponseDto<EmployeeDto>>> saveEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
 
         System.out.println(employeeDto);
-//        return employeeService.addEmployee(employeeDto);
-        return null;
+        EmployeeDto savedEmployeeDto = employeeService.addEmployee(employeeDto);
+
+        ResponseDto<SuccessResponseDto<EmployeeDto>> responseDto = new ResponseDto<>();
+
+        SuccessResponseDto<EmployeeDto> successResponseDto = new SuccessResponseDto<>();
+        successResponseDto.setData(savedEmployeeDto);
+        successResponseDto.setMessage(String.format(EmployeeConstant.INSERT_MESSAGE,savedEmployeeDto.getEmpId()));
+        successResponseDto.setStatus(EmployeeConstant.INSERT_STATUS);
+
+        responseDto.setResponse(successResponseDto);
+
+
+        return ResponseEntity.status(HttpStatus.valueOf(EmployeeConstant.INSERT_STATUS)).body(responseDto);
     }
 
     /*
