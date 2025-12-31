@@ -9,8 +9,8 @@ import java.util.List;
 public interface EmployeeService {
     EmployeeDto addEmployee(EmployeeDto employeeDto);
 
-//    List<EmployeeInfo> getAllEmployees();
-//
+    List<EmployeeDto> getAllEmployees();
+
 //    EmployeeInfo getEmployeeById(int empId);
 //
 //    boolean deleteById(int empId);

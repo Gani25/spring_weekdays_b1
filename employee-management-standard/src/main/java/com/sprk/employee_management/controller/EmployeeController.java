@@ -41,13 +41,23 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.valueOf(EmployeeConstant.INSERT_STATUS)).body(responseDto);
     }
 
-    /*
     @GetMapping("/employees")
 
-    public List<EmployeeInfo> getAllEmployees() {
+    public ResponseEntity<ResponseDto<SuccessResponseDto<List<EmployeeDto>>>> getAllEmployees() {
 
-        return employeeService.getAllEmployees();
+        ResponseDto<SuccessResponseDto<List<EmployeeDto>>> responseDto = new ResponseDto<>();
+
+        List<EmployeeDto> allEmployeeDtos = employeeService.getAllEmployees();
+        SuccessResponseDto<List<EmployeeDto>> successResponseDto = new SuccessResponseDto<>();
+        successResponseDto.setData(allEmployeeDtos);
+        successResponseDto.setStatus(EmployeeConstant.SUCCESS_STATUS);
+        successResponseDto.setMessage(EmployeeConstant.FETCH_ALL_MESSAGE);
+
+        responseDto.setResponse(successResponseDto);
+
+        return ResponseEntity.status(HttpStatus.valueOf(EmployeeConstant.SUCCESS_STATUS)).body(responseDto);
     }
+    /*
 
     @GetMapping("/employees/{empId}")
     public EmployeeInfo getEmployeeById(@PathVariable int empId) {
