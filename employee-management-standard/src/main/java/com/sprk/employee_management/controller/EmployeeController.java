@@ -57,13 +57,14 @@ public class EmployeeController {
 
         return ResponseEntity.status(HttpStatus.valueOf(EmployeeConstant.SUCCESS_STATUS)).body(responseDto);
     }
-    /*
 
+    /*
     @GetMapping("/employees/{empId}")
     public EmployeeInfo getEmployeeById(@PathVariable int empId) {
 
         return employeeService.getEmployeeById(empId);
     }
+
 
     @DeleteMapping("/employees/{empId}")
     public String deleteEmployeeById(@PathVariable int empId) {
@@ -74,11 +75,21 @@ public class EmployeeController {
         }
         return String.format("Employee with id = %d could not found!!", empId);
     }
+     */
 
-//    @PutMapping("/employees/{empId}")
-//    public EmployeeInfo updateEmployee(@PathVariable int empId, @RequestBody EmployeeInfo employeeInfo) {
-//
-//        return employeeService.updateEmployee(empId, employeeInfo);
-//    }
-    */
+    @PutMapping("/employees/{empId}")
+    public ResponseEntity<ResponseDto<SuccessResponseDto<EmployeeDto>>> updateEmployee(@PathVariable("empId") String empIdStr, @RequestBody EmployeeDto updatedEmployeeDto) {
+
+        EmployeeDto newUpdatedEmployeeDto = employeeService.updateEmployee(empIdStr, updatedEmployeeDto);
+
+        ResponseDto<SuccessResponseDto<EmployeeDto>> responseDto = new ResponseDto<>();
+        SuccessResponseDto<EmployeeDto> successResponseDto = new SuccessResponseDto<>();
+        successResponseDto.setData(newUpdatedEmployeeDto);
+        successResponseDto.setStatus(EmployeeConstant.SUCCESS_STATUS);
+        successResponseDto.setMessage(String.format(EmployeeConstant.EMP_UPDATE_MESSAGE,empIdStr));
+        responseDto.setResponse(successResponseDto);
+
+        return ResponseEntity.status(HttpStatus.valueOf(EmployeeConstant.SUCCESS_STATUS)).body(responseDto);
+    }
+
 }

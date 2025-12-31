@@ -15,5 +15,5 @@ public interface EmployeeService {
 //
 //    boolean deleteById(int empId);
 
-//    EmployeeInfo updateEmployee(int empId, EmployeeInfo employeeInfo);
+    EmployeeDto updateEmployee(String empIdStr, EmployeeDto updatedEmployeeDto);
 }
