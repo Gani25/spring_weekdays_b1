@@ -1,10 +1,14 @@
 package com.sprk.employee_management.service.impl;
 
+import com.sprk.employee_management.constant.EmployeeConstant;
 import com.sprk.employee_management.dto.EmployeeDto;
 import com.sprk.employee_management.entity.EmployeeInfo;
+import com.sprk.employee_management.exception.EmailAlreadyExistsException;
+import com.sprk.employee_management.exception.PhoneAlreadyExistsException;
 import com.sprk.employee_management.repository.EmployeeRepository;
 import com.sprk.employee_management.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto addEmployee(EmployeeDto employeeDto) {
 
+        // check if same email/phone is already registered If Yes? throw exception
+
+        if(employeeRepository.existsByEmail(employeeDto.getEmail())){
+            // throw exception
+            throw  new EmailAlreadyExistsException(
+                    String.format(EmployeeConstant.EMAIL_ALREADY_TAKEN,employeeDto.getEmail()),
+                    HttpStatus.valueOf( EmployeeConstant.BAD_REQUEST_STATUS)
+            );
+        }
+        if(employeeRepository.existsByPhone(employeeDto.getPhone())){
+            // throw exception
+            throw  new PhoneAlreadyExistsException(
+                    String.format(EmployeeConstant.PHONE_ALREADY_TAKEN,employeeDto.getPhone()),
+                    HttpStatus.valueOf( EmployeeConstant.BAD_REQUEST_STATUS)
+            );
+        }
+
         employeeDto.setEmpId(null);
+
+
 
         // Conversion from DTO to Entity
         EmployeeInfo employeeInfo = EmployeeInfo

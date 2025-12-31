@@ -2,6 +2,7 @@ package com.sprk.employee_management.controller.advice;
 
 import com.sprk.employee_management.dto.ErrorResponseDto;
 import com.sprk.employee_management.dto.ResponseDto;
+import com.sprk.employee_management.exception.EmployeeException;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.View;
@@ -62,5 +64,22 @@ public class EmployeeAdvice extends ResponseEntityExceptionHandler {
 
         // Finally returning ResponseEntity Object with our filled ResponseDto Object
         return ResponseEntity.status(status).body(responseDto);
+    }
+
+    @ExceptionHandler(EmployeeException.class)
+    public ResponseEntity<ResponseDto<ErrorResponseDto<String>>> handleEmployeeException(EmployeeException ex, WebRequest request) {
+
+        ResponseDto<ErrorResponseDto<String>> responseDto = new ResponseDto<>();
+
+        ErrorResponseDto<String> errorResponseDto = new ErrorResponseDto<>();
+        errorResponseDto.setTimestamp(LocalDateTime.now());
+        errorResponseDto.setStatus(ex.getStatus());
+        errorResponseDto.setApiPath(request.getDescription(false));
+        errorResponseDto.setErrorMessage(ex.getMessage());
+
+        responseDto.setResponse(errorResponseDto);
+
+        return ResponseEntity.status(ex.getStatus()).body(responseDto);
+
     }
 }
